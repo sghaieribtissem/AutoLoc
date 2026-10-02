@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "contrat")
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Contrat {
 
     @Id
@@ -29,4 +31,12 @@ public class Contrat {
 
     @Column(nullable = false)
     private boolean valide;
+
+    // Un contrat correspond à une seule réservation
+    @OneToOne(mappedBy = "contrat")
+    private Reservation reservation;
+
+    // Un contrat peut avoir plusieurs paiements
+    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL)
+    private List<Paiement> paiements = new ArrayList<>();
 }

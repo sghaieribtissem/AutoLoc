@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "vehicule")
@@ -14,6 +17,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Vehicule {
 
     @Id
@@ -39,4 +43,24 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
+
+    // Plusieurs véhicules peuvent appartenir à une même agence
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agence_id")
+    private Agence agence;
+
+    // Plusieurs véhicules peuvent avoir plusieurs équipements
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "vehicule_equipement",
+            joinColumns = @JoinColumn(name = "vehicule_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipement_id"))
+    private Set<Equipement> equipements = new HashSet<>();
+
+    // Un véhicule peut avoir plusieurs réservations
+    @OneToMany(mappedBy = "vehicule")
+    private List<Reservation> reservations = new ArrayList<>();
+
+    // Un véhicule peut avoir plusieurs maintenances
+    @OneToMany(mappedBy = "vehicule")
+    private List<Maintenance> maintenances = new ArrayList<>();
 }

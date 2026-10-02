@@ -28,4 +28,9 @@ public class Maintenance {
 
     @Column(nullable = false, length = 255)
     private String description;
+
+    // Plusieurs maintenances peuvent concerner un même véhicule
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "vehicule_id")
+    private Vehicule vehicule;
 }
