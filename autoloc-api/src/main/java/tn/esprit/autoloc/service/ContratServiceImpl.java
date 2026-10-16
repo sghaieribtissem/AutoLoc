@@ -21,8 +21,7 @@ public class ContratServiceImpl implements IContratService {
     }
 
     @Override
-    public Contrat modifier(Long id, Contrat contrat) {
-        contrat.setIdContrat(id);
+    public Contrat modifier( Contrat contrat) {
         return contratRepository.save(contrat);
     }
 

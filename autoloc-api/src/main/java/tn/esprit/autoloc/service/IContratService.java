@@ -8,7 +8,7 @@ public interface IContratService {
 
     Contrat ajouter(Contrat contrat);
 
-    Contrat modifier(Long id, Contrat contrat);
+    Contrat modifier( Contrat contrat);
 
     List<Contrat> recupererTous();
 
